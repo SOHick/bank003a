@@ -15,7 +15,7 @@ public class Server {
      * Запуск сервера
      */
     public void start(){
-        ServerSocket ss = null;
+        ServerSocket ss;
         try {
             ss = new ServerSocket(_port);
             var sSckt = ss;

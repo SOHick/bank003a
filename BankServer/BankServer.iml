@@ -10,5 +10,6 @@
     <orderEntry type="library" name="lambdaworks.scrypt" level="project" />
     <orderEntry type="library" name="mysql.connector.j" level="project" />
     <orderEntry type="module" module-name="BankIO" />
+    <orderEntry type="module" module-name="BankClient" />
   </component>
 </module>

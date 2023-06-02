@@ -1,7 +1,8 @@
-package ru.smak.ui;
+package ru.smak.ui.AuthandReg;
 
 import ru.smak.data.User;
 import ru.smak.net.Client;
+import ru.smak.ui.bwindow.BankWindow.BankWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -35,6 +36,7 @@ public class RegWindow extends JFrame {
     public RegWindow(JFrame parent, Client client){
         this.client = client;
         setSize(600,450);
+        this.setTitle("Регистрация");
         GroupLayout gl = new GroupLayout(getContentPane());
         setLayout(gl);
         lblPhone = new JLabel("Номер телефона: ");
@@ -54,8 +56,7 @@ public class RegWindow extends JFrame {
         btnReg = new JButton("Зарегистрироваться");
         btnCancel = new JButton("Отмена");
 
-        gl.setHorizontalGroup(
-                gl.createSequentialGroup()
+        gl.setHorizontalGroup(gl.createSequentialGroup()
                         .addGap(8,8, Integer.MAX_VALUE)
                         .addGroup(gl.createParallelGroup()
                                 .addGroup(
@@ -111,8 +112,7 @@ public class RegWindow extends JFrame {
                         )
                         .addGap(8,8, Integer.MAX_VALUE)
         );
-        gl.setVerticalGroup(
-                gl.createSequentialGroup()
+        gl.setVerticalGroup(gl.createSequentialGroup()
                         .addGap(8,8,Integer.MAX_VALUE)
                         .addGroup(
                                 gl.createParallelGroup()
@@ -178,7 +178,10 @@ public class RegWindow extends JFrame {
                 {
                     user.setPassword(tfPassword.getText());
                     try {
-                        client.regUser(user);
+                        setVisible(false);
+                        AuthWindow window = new AuthWindow(client);
+                        window.setVisible(true);
+                        client.regUser(user,1);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }

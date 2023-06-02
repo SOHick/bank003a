@@ -53,8 +53,8 @@ public class User implements Serializable {
     }
 
     public void setPassword(String password) {
-        var hash = SCryptUtil.scrypt(password,512,128,16);
-        this.password = hash;
+       // var hash = SCryptUtil.scrypt(password,512,128,16);
+        this.password = password;
     }
     public void setPasswordHash(String hash)
     {

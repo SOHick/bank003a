@@ -1,12 +1,13 @@
-package ru.smak.ui;
+package ru.smak.ui.AuthandReg;
 
+import ru.smak.data.Card;
 import ru.smak.data.User;
 import ru.smak.net.Client;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.sql.Date;
 
 public class AuthWindow extends JFrame {
     private static int MIN_SZ = GroupLayout.PREFERRED_SIZE;
@@ -22,6 +23,7 @@ public class AuthWindow extends JFrame {
     public AuthWindow(Client client){
         this.client = client;
         setSize(600,450);
+        this.setTitle("Авторизация");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         GroupLayout gl = new GroupLayout(getContentPane());
         setLayout(gl);
@@ -33,6 +35,8 @@ public class AuthWindow extends JFrame {
         tfPhone = new JTextField();
 
         tfPassword = new JTextField();
+        tfPhone.setText("123");
+        tfPassword.setText("123");
 
         btnAuth = new JButton("Войти");
         btnReg = new JButton("Регистрация");
@@ -97,6 +101,28 @@ public class AuthWindow extends JFrame {
                 var rw=new RegWindow(AuthWindow.this, client);
                 rw.setVisible(true);
                 setVisible(false);
+            }
+        });
+        btnAuth.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                User user = new User();
+                Card card = new Card();
+                user.setPhone(tfPhone.getText());
+                card.setPhone(tfPhone.getText());
+                user.setPassword(tfPassword.getText());
+                try {
+                    client.setJFrame(AuthWindow.this);
+                    client.regUser(user,2);
+                    client.regCard(card,8);
+                    client.setClient(client);
+
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+
+                }
+
             }
         });
     }

@@ -2,6 +2,7 @@ package ru.smak.net;
 
 import java.io.*;
 import java.net.Socket;
+import java.sql.ResultSet;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -29,7 +30,6 @@ public class NetIO {
         stop = false;
         while (!stop){
             var ba = new byte[10240];
-            //var bat = s.getInputStream().readNBytes(4);
             s.getInputStream().read(ba);
             var ois = new ObjectInputStream(new ByteArrayInputStream(ba));
             var type = ois.readInt();
@@ -53,7 +53,6 @@ public class NetIO {
         os.write(bytes);
         os.flush();
     }
-
     /**
      * Метод выполняет остановку процесса получения данных с удаленной стороны
      */
