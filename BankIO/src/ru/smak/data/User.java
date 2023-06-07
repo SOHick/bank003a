@@ -1,7 +1,4 @@
 package ru.smak.data;
-
-import com.lambdaworks.crypto.SCryptUtil;
-
 import java.io.Serializable;
 import java.sql.Date;
 

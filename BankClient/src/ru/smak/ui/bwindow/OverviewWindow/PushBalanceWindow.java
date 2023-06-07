@@ -42,17 +42,10 @@ public class PushBalanceWindow extends JFrame
         };
         int k=0;
         String[] AllMyCard = new String[ListCard.size()];
-        String[] AllCard = new String[ListCard.size()];
         for (Card card : ListCard) {
             AllMyCard[k] =card.getNumberCard();
             k++;
         }
-        int j=0;
-        for (Card card : ListAllCard) {
-            AllCard[k] =card.getNumberCard();
-            j++;
-        }
-        JComboBox jcbAllCard = new JComboBox(AllCard);
         JComboBox jcbAllMyCard = new JComboBox(AllMyCard);
         JButton btnPush = new JButton("Отправить средства");
         JButton btnCancel = new JButton("Отмена");
@@ -72,13 +65,13 @@ public class PushBalanceWindow extends JFrame
                                 gl.createSequentialGroup()
                                         .addComponent(lblPhonePress, MIN_SZ, MIN_SZ, MIN_SZ)
                                         .addGap(8)
-                                        .addComponent(jcbAllCard,MAX_SZ, MAX_SZ, MAX_SZ)
+                                        .addComponent(jcbAllMyCard,MAX_SZ, MAX_SZ, MAX_SZ)
                         )
                         .addGroup(
                                 gl.createSequentialGroup()
                                         .addComponent(lblPhone, MIN_SZ, MIN_SZ, MIN_SZ)
                                         .addGap(8)
-                                        .addComponent(jcbAllMyCard,MAX_SZ, MAX_SZ, MAX_SZ)
+                                        .addComponent(tfPhone,MAX_SZ, MAX_SZ, MAX_SZ)
                         )
                         .addGroup(
                                 gl.createSequentialGroup()
@@ -109,13 +102,13 @@ public class PushBalanceWindow extends JFrame
                 .addGroup(
                         gl.createParallelGroup()
                                 .addComponent(lblPhonePress,MIN_SZ, MIN_SZ, MIN_SZ)
-                                .addComponent(jcbAllCard, MIN_SZ, MIN_SZ, MIN_SZ)
+                                .addComponent(jcbAllMyCard, MIN_SZ, MIN_SZ, MIN_SZ)
                 )
                 .addGap(4)
                 .addGroup(
                         gl.createParallelGroup()
                                 .addComponent(lblPhone,MIN_SZ, MIN_SZ, MIN_SZ)
-                                .addComponent(jcbAllMyCard, MIN_SZ, MIN_SZ, MIN_SZ)
+                                .addComponent(tfPhone, MIN_SZ, MIN_SZ, MIN_SZ)
                 )
                 .addGap(4)
                 .addGroup(
@@ -153,9 +146,9 @@ public class PushBalanceWindow extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                String infoCardORAccountPress = jcbAllMyCard.getSelectedItem().toString();
+                String infoCardORAccountPress = tfPress.getText();
                 String infoCardORAccount = tfPhone.getText();
-                String infoBalance = jcbAllCard.getSelectedItem().toString();
+                String infoBalance = jcbAllMyCard.getSelectedItem().toString();
                 Integer infoBalanceInt = Integer.valueOf(infoBalance);
                 if (jcbTransferMethod.getSelectedIndex() == 0)
                     {

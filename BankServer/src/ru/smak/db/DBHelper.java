@@ -242,7 +242,7 @@ public class DBHelper {
         return resSet;
 
     }
-    public ResultSet getCardAll (Card card) throws SQLException
+    public ResultSet getCardAll () throws SQLException
     {
         ResultSet resSet = null;
         String SQL = "SELECT NumberCard FROM cardaccount";

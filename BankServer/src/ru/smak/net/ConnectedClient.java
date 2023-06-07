@@ -302,9 +302,8 @@ public class ConnectedClient {
             }
             case 11 ->
             {
-                Card v = (Card) data;
                 try {
-                    ResultSet result = dbh.getCardAll(v);
+                    ResultSet result = dbh.getCardAll();
                     int counter = 0;
                     List<Card> ListCard  = new ArrayList<Card>();
                     while(result.next()) {
@@ -318,14 +317,7 @@ public class ConnectedClient {
                             arr[i] = result.getObject(i+1);
 
                         }
-                        reverseUser.setPhone(String.valueOf(arr[1]));
-                        reverseUser.setAccountNumber(String.valueOf(arr[2]));
-                        reverseUser.setBalance((Integer) arr[3]);
-                        reverseUser.setPaymentSystems(String.valueOf(arr[4]));
-                        reverseUser.setTypeCard(String.valueOf(arr[5]));
-                        reverseUser.setLastAccountNumber(String.valueOf(arr[6]));
                         reverseUser.setNumberCard(String.valueOf(arr[7]));
-                        reverseUser.setNumberChet(String.valueOf(arr[8]));
                         records.add(arr);
                         ListCard.add(reverseUser);
                     }

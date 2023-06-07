@@ -110,10 +110,12 @@ public class BankWindow extends JFrame
     public void setCardList(List<Card> CardList)
     {
         this.CardList = CardList;
+        System.out.println(CardList.size());
     }
     public void setCardAllList(List<Card> CardAllList)
     {
         this.CardList = CardAllList;
+        System.out.println(CardAllList.size());
     }
     public OverviewWindow getMainWindowPanel() {
         return mainWindowPanel;
