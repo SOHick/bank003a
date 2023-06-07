@@ -116,6 +116,7 @@ public class AuthWindow extends JFrame {
                     client.setJFrame(AuthWindow.this);
                     client.regUser(user,2);
                     client.regCard(card,8);
+                    client.regCard(card,11);
                     client.setClient(client);
 
                 } catch (IOException ex) {

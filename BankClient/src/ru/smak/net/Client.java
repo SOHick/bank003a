@@ -26,6 +26,7 @@ public class Client
     private BankWindow bankWindow;
     private Integer puy =0;
     private  User user;
+    private List<Card> ListCardAll;
 
     public Client(String host, int port) throws IOException {
         _host = host;
@@ -106,6 +107,10 @@ public class Client
             case 5->{
                 Boolean b = (Boolean) data;
                 bankWindow.getMainWindowPanel().setB(b);
+            }
+            case 6->{
+                ListCardAll = (List<Card>) data;
+                bankWindow.setCardAllList(ListCardAll);
             }
 
         }

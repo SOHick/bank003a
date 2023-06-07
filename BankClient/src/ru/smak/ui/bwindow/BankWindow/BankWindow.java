@@ -24,6 +24,7 @@ public class BankWindow extends JFrame
     private  OverviewWindow mainWindowPanel;
     private  List<BankAccount> ListBankAccount;
     private  List<Card> CardList;
+    private  List<Card> CardAllList;
     private final Client client;
     public BankWindow(User user, Client client){
         this.client = client;
@@ -71,7 +72,7 @@ public class BankWindow extends JFrame
             public void actionPerformed(ActionEvent e)
             {
                     setDataAccount(client,user);
-                     mainWindowPanel = new OverviewWindow(mainPanel,user,client,CardList);
+                     mainWindowPanel = new OverviewWindow(mainPanel,user,client,CardList,CardAllList);
                      mainWindowPanel.setListBankAccount(ListBankAccount);
                      mainPanel.removeAll();
             }
@@ -110,6 +111,10 @@ public class BankWindow extends JFrame
     {
         this.CardList = CardList;
     }
+    public void setCardAllList(List<Card> CardAllList)
+    {
+        this.CardList = CardAllList;
+    }
     public OverviewWindow getMainWindowPanel() {
         return mainWindowPanel;
     }
@@ -122,6 +127,7 @@ public class BankWindow extends JFrame
         try {
             client.regAccount(BA,5);
             client.regCard(card,8);
+            client.regCard(card,11);
 
         } catch (IOException ex) {
             throw new RuntimeException(ex);

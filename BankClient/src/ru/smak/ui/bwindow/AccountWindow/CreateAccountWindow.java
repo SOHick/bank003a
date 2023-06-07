@@ -89,7 +89,7 @@ public class CreateAccountWindow extends JFrame
                 BA.setCodeBank("6458");
                 int digits = 7;
                 int x = nDigitRandomNo(digits);
-                String m= Integer.toString(x);
+                String m = Integer.toString(x);
                 BA.setAccountNumber(m);
 
                 try {

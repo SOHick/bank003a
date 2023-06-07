@@ -22,21 +22,24 @@ public class OverviewWindow extends JPanel
     private  final Client client;
     private  List<BankAccount> ListBankAccount;
     private final   List<Card> CardList;
+    private final   List<Card> CardAllList;
     private  Boolean b;
     private final static int MIN_SZ = GroupLayout.PREFERRED_SIZE;
     private final static int MAX_SZ = GroupLayout.DEFAULT_SIZE;
     private ValueBalanceAndQuantity jpnBalance;
     private ValueBalanceAndQuantity jpnQuantityAccounts;
     private  PushBalanceWindow pushBalanceWindow;
-    public OverviewWindow(JPanel mainPanel, User user, Client client,List<Card> CardList)
+    public OverviewWindow(JPanel mainPanel, User user, Client client,List<Card> CardList,List<Card> CardAllList)
     {
         try {
             Card card = new Card();
             card.setPhone(user.getPhone());
             client.regCard(card,8);
+            client.regCard(card,11);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        this.CardAllList= CardAllList;
         this.CardList = CardList;
         this.user = user;
         this.client = client;
@@ -131,7 +134,7 @@ public class OverviewWindow extends JPanel
         btnPush.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pushBalanceWindow = new PushBalanceWindow(user,client,WCard,ListBankAccount,CardList);
+                pushBalanceWindow = new PushBalanceWindow(user,client,WCard,ListBankAccount,CardList,CardAllList);
                 pushBalanceWindow.setVisible(true);
             }
         });

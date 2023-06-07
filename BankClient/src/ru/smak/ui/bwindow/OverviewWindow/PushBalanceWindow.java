@@ -5,11 +5,7 @@ import ru.smak.data.Card;
 import ru.smak.data.Transfer;
 import ru.smak.data.User;
 import ru.smak.net.Client;
-import ru.smak.ui.AuthandReg.RegWindow;
-
 import javax.swing.*;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -19,9 +15,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
-import java.text.*;
 import java.util.List;
-import java.util.Objects;
+
 
 public class PushBalanceWindow extends JFrame
 {
@@ -29,7 +24,7 @@ public class PushBalanceWindow extends JFrame
     private final static int MAX_SZ = GroupLayout.DEFAULT_SIZE;
     private  JTextField tfPhone;
     private Boolean b;
-    public PushBalanceWindow(User user, Client client, JPanel WCard, List<BankAccount> ListBankAccount,List<Card> ListCard)
+    public PushBalanceWindow(User user, Client client, JPanel WCard, List<BankAccount> ListBankAccount,List<Card> ListCard,List<Card> ListAllCard)
     {
         this.setTitle("Перевод другому клиенту");
         setSize(600,450);
@@ -45,6 +40,20 @@ public class PushBalanceWindow extends JFrame
                 "По номеру карты",
                 "По номеру телефона",
         };
+        int k=0;
+        String[] AllMyCard = new String[ListCard.size()];
+        String[] AllCard = new String[ListCard.size()];
+        for (Card card : ListCard) {
+            AllMyCard[k] =card.getNumberCard();
+            k++;
+        }
+        int j=0;
+        for (Card card : ListAllCard) {
+            AllCard[k] =card.getNumberCard();
+            j++;
+        }
+        JComboBox jcbAllCard = new JComboBox(AllCard);
+        JComboBox jcbAllMyCard = new JComboBox(AllMyCard);
         JButton btnPush = new JButton("Отправить средства");
         JButton btnCancel = new JButton("Отмена");
         JComboBox jcbTransferMethod = new JComboBox(TransferMethod);
@@ -63,13 +72,13 @@ public class PushBalanceWindow extends JFrame
                                 gl.createSequentialGroup()
                                         .addComponent(lblPhonePress, MIN_SZ, MIN_SZ, MIN_SZ)
                                         .addGap(8)
-                                        .addComponent(tfPress,MAX_SZ, MAX_SZ, MAX_SZ)
+                                        .addComponent(jcbAllCard,MAX_SZ, MAX_SZ, MAX_SZ)
                         )
                         .addGroup(
                                 gl.createSequentialGroup()
                                         .addComponent(lblPhone, MIN_SZ, MIN_SZ, MIN_SZ)
                                         .addGap(8)
-                                        .addComponent(tfPhone,MAX_SZ, MAX_SZ, MAX_SZ)
+                                        .addComponent(jcbAllMyCard,MAX_SZ, MAX_SZ, MAX_SZ)
                         )
                         .addGroup(
                                 gl.createSequentialGroup()
@@ -100,13 +109,13 @@ public class PushBalanceWindow extends JFrame
                 .addGroup(
                         gl.createParallelGroup()
                                 .addComponent(lblPhonePress,MIN_SZ, MIN_SZ, MIN_SZ)
-                                .addComponent(tfPress, MIN_SZ, MIN_SZ, MIN_SZ)
+                                .addComponent(jcbAllCard, MIN_SZ, MIN_SZ, MIN_SZ)
                 )
                 .addGap(4)
                 .addGroup(
                         gl.createParallelGroup()
                                 .addComponent(lblPhone,MIN_SZ, MIN_SZ, MIN_SZ)
-                                .addComponent(tfPhone, MIN_SZ, MIN_SZ, MIN_SZ)
+                                .addComponent(jcbAllMyCard, MIN_SZ, MIN_SZ, MIN_SZ)
                 )
                 .addGap(4)
                 .addGroup(
@@ -144,9 +153,9 @@ public class PushBalanceWindow extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                String infoCardORAccountPress = tfPress.getText();
+                String infoCardORAccountPress = jcbAllMyCard.getSelectedItem().toString();
                 String infoCardORAccount = tfPhone.getText();
-                String infoBalance = tfBalance.getText();
+                String infoBalance = jcbAllCard.getSelectedItem().toString();
                 Integer infoBalanceInt = Integer.valueOf(infoBalance);
                 if (jcbTransferMethod.getSelectedIndex() == 0)
                     {
@@ -177,7 +186,7 @@ public class PushBalanceWindow extends JFrame
             }
 
             @Override
-            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
                 // Проверка, соответствует ли заменяемая строка формату числа с плавающей точкой
                 if (isValidFloat(text)) {
                     super.replace(fb, offset, length, text, attrs);

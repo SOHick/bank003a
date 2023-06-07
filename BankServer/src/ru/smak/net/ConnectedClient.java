@@ -49,8 +49,7 @@ public class ConnectedClient {
     }
     public Void parse(Integer type,Object data)
     {
-        switch (type)
-        {
+        switch (type) {
             case 1 -> {
                 User u = (User) data;
                 try {
@@ -61,47 +60,44 @@ public class ConnectedClient {
                 }
 
             }
-            case 2 ->
-            {
-                User v= (User) data;
+            case 2 -> {
+                User v = (User) data;
                 try {
-                ResultSet result = dbh.getUsers(v);
-                int counter = 0;
-                User reverseUser = new User();
-                List<Object> records =new ArrayList<Object>();
-                int cols = result.getMetaData().getColumnCount();
-                Object[] arr = new Object[cols];
-                while(result.next()) {
-                    counter++;
-                    for(int i=0; i<cols; i++)
-                    {
-                        arr[i] = result.getObject(i+1);
+                    ResultSet result = dbh.getUsers(v);
+                    int counter = 0;
+                    User reverseUser = new User();
+                    List<Object> records = new ArrayList<Object>();
+                    int cols = result.getMetaData().getColumnCount();
+                    Object[] arr = new Object[cols];
+                    while (result.next()) {
+                        counter++;
+                        for (int i = 0; i < cols; i++) {
+                            arr[i] = result.getObject(i + 1);
+
+                        }
+                        reverseUser.setPhone(String.valueOf(arr[0]));
+                        reverseUser.setLastName(String.valueOf(arr[1]));
+                        reverseUser.setFirstName(String.valueOf(arr[2]));
+                        reverseUser.setMiddleName(String.valueOf(arr[3]));
+                        reverseUser.setBirth((Date) arr[4]);
+                        reverseUser.setPassword(String.valueOf(arr[5]));
+                        records.add(arr);
 
                     }
-                    reverseUser.setPhone(String.valueOf(arr[0]));
-                    reverseUser.setLastName(String.valueOf(arr[1]));
-                    reverseUser.setFirstName(String.valueOf(arr[2]));
-                    reverseUser.setMiddleName(String.valueOf(arr[3]));
-                    reverseUser.setBirth((Date) arr[4]);
-                    reverseUser.setPassword(String.valueOf(arr[5]));
-                    records.add(arr);
-
-                }
-                if (counter == 1)
-                {
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ObjectOutputStream ous = new ObjectOutputStream(baos);
-                    ous.writeInt(counter);
-                    ous.writeObject(reverseUser);
-                    var ba = baos.toByteArray();
-                    nio.sendData(ba);
-                }
+                    if (counter == 1) {
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        ObjectOutputStream ous = new ObjectOutputStream(baos);
+                        ous.writeInt(counter);
+                        ous.writeObject(reverseUser);
+                        var ba = baos.toByteArray();
+                        nio.sendData(ba);
+                    }
                 } catch (SQLException | IOException e) {
                     System.out.println(e.getMessage());
                 }
             }
             case 3 -> {
-                BankAccount v= (BankAccount) data;
+                BankAccount v = (BankAccount) data;
                 try {
                     dbh.addBankAccount(v);
                 } catch (SQLException e) {
@@ -113,16 +109,15 @@ public class ConnectedClient {
                 try {
                     ResultSet result = dbh.getAccountNumber(v);
                     int counter = 0;
-                    List<BankAccount> ListBankAccount  = new ArrayList<BankAccount>();
-                    while(result.next()) {
+                    List<BankAccount> ListBankAccount = new ArrayList<BankAccount>();
+                    while (result.next()) {
                         counter++;
                         BankAccount reverseUser = new BankAccount();
-                        List<Object> records =new ArrayList<Object>();
+                        List<Object> records = new ArrayList<Object>();
                         int cols = result.getMetaData().getColumnCount();
                         Object[] arr = new Object[cols];
-                        for(int i=0; i<cols; i++)
-                        {
-                            arr[i] = result.getObject(i+1);
+                        for (int i = 0; i < cols; i++) {
+                            arr[i] = result.getObject(i + 1);
 
                         }
                         reverseUser.setPhone(String.valueOf(arr[1]));
@@ -136,12 +131,12 @@ public class ConnectedClient {
                         records.add(arr);
                         ListBankAccount.add(reverseUser);
                     }
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        ObjectOutputStream ous = new ObjectOutputStream(baos);
-                        ous.writeInt(2);
-                        ous.writeObject(ListBankAccount);
-                        var ba = baos.toByteArray();
-                        nio.sendData(ba);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ObjectOutputStream ous = new ObjectOutputStream(baos);
+                    ous.writeInt(2);
+                    ous.writeObject(ListBankAccount);
+                    var ba = baos.toByteArray();
+                    nio.sendData(ba);
 
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
@@ -155,16 +150,15 @@ public class ConnectedClient {
                 try {
                     ResultSet result = dbh.getAccountNumber(v);
                     int counter = 0;
-                    List<BankAccount> ListBankAccount  = new ArrayList<BankAccount>();
-                    while(result.next()) {
+                    List<BankAccount> ListBankAccount = new ArrayList<BankAccount>();
+                    while (result.next()) {
                         counter++;
                         BankAccount reverseUser = new BankAccount();
-                        List<Object> records =new ArrayList<Object>();
+                        List<Object> records = new ArrayList<Object>();
                         int cols = result.getMetaData().getColumnCount();
                         Object[] arr = new Object[cols];
-                        for(int i=0; i<cols; i++)
-                        {
-                            arr[i] = result.getObject(i+1);
+                        for (int i = 0; i < cols; i++) {
+                            arr[i] = result.getObject(i + 1);
 
                         }
                         reverseUser.setBalanceNumberOne(String.valueOf(arr[2]));
@@ -185,9 +179,7 @@ public class ConnectedClient {
                     var ba = baos.toByteArray();
                     nio.sendData(ba);
 
-                }
-
-                catch (SQLException e) {
+                } catch (SQLException e) {
                     System.out.println(e.getMessage());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -195,7 +187,7 @@ public class ConnectedClient {
 
             }
             case 6 -> {
-                Card v= (Card) data;
+                Card v = (Card) data;
                 try {
                     dbh.addCard(v);
                 } catch (SQLException e) {
@@ -203,7 +195,7 @@ public class ConnectedClient {
                 }
             }
             case 7 -> {
-                BankAccount v= (BankAccount) data;
+                BankAccount v = (BankAccount) data;
                 try {
                     dbh.addBankAccountBalance(v);
                 } catch (SQLException e) {
@@ -215,16 +207,15 @@ public class ConnectedClient {
                 try {
                     ResultSet result = dbh.getCard(v);
                     int counter = 0;
-                    List<Card> ListCard  = new ArrayList<Card>();
-                    while(result.next()) {
+                    List<Card> ListCard = new ArrayList<Card>();
+                    while (result.next()) {
                         counter++;
                         Card reverseUser = new Card();
-                        List<Object> records =new ArrayList<Object>();
+                        List<Object> records = new ArrayList<Object>();
                         int cols = result.getMetaData().getColumnCount();
                         Object[] arr = new Object[cols];
-                        for(int i=0; i<cols; i++)
-                        {
-                            arr[i] = result.getObject(i+1);
+                        for (int i = 0; i < cols; i++) {
+                            arr[i] = result.getObject(i + 1);
 
                         }
                         reverseUser.setPhone(String.valueOf(arr[1]));
@@ -246,20 +237,74 @@ public class ConnectedClient {
                     nio.sendData(ba);
 
 
-                }
-
-                catch (SQLException e) {
+                } catch (SQLException e) {
                     System.out.println(e.getMessage());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
 
             }
-            case 9 ->
-            {
+            case 9 -> {
                 Card v = (Card) data;
                 try {
                     ResultSet result = dbh.getCardBalance(v);
+                    int counter = 0;
+                    List<Card> ListCard = new ArrayList<Card>();
+                    while (result.next()) {
+                        counter++;
+                        Card reverseUser = new Card();
+                        List<Object> records = new ArrayList<Object>();
+                        int cols = result.getMetaData().getColumnCount();
+                        Object[] arr = new Object[cols];
+                        for (int i = 0; i < cols; i++) {
+                            arr[i] = result.getObject(i + 1);
+
+                        }
+                        reverseUser.setPhone(String.valueOf(arr[1]));
+                        reverseUser.setAccountNumber(String.valueOf(arr[2]));
+                        reverseUser.setBalance((Integer) arr[3]);
+                        reverseUser.setPaymentSystems(String.valueOf(arr[4]));
+                        reverseUser.setTypeCard(String.valueOf(arr[5]));
+                        reverseUser.setLastAccountNumber(String.valueOf(arr[6]));
+                        reverseUser.setNumberCard(String.valueOf(arr[7]));
+                        reverseUser.setNumberChet(String.valueOf(arr[8]));
+                        records.add(arr);
+                        ListCard.add(reverseUser);
+                    }
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ObjectOutputStream ous = new ObjectOutputStream(baos);
+                    ous.writeInt(4);
+                    ous.writeObject(ListCard);
+                    var ba = baos.toByteArray();
+                    nio.sendData(ba);
+
+
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+            case 10 -> {
+                Transfer v = (Transfer) data;
+                try {
+                    boolean b = dbh.UpdateBalanceCardAccountPush(v);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ObjectOutputStream ous = new ObjectOutputStream(baos);
+                    ous.writeInt(5);
+                    ous.writeObject(b);
+                    var ba = baos.toByteArray();
+                    nio.sendData(ba);
+                } catch (SQLException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            case 11 ->
+            {
+                Card v = (Card) data;
+                try {
+                    ResultSet result = dbh.getCardAll(v);
                     int counter = 0;
                     List<Card> ListCard  = new ArrayList<Card>();
                     while(result.next()) {
@@ -286,36 +331,18 @@ public class ConnectedClient {
                     }
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     ObjectOutputStream ous = new ObjectOutputStream(baos);
-                    ous.writeInt(4);
+                    ous.writeInt(6);
                     ous.writeObject(ListCard);
                     var ba = baos.toByteArray();
                     nio.sendData(ba);
 
 
-                }
-
-                catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-            }
-            case 10 -> {
-                Transfer v= (Transfer) data;
-                try {
-                     boolean b = dbh.UpdateBalanceCardAccountPush(v);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ObjectOutputStream ous = new ObjectOutputStream(baos);
-                    ous.writeInt(5);
-                    ous.writeObject(b);
-                    var ba = baos.toByteArray();
-                    nio.sendData(ba);
                 } catch (SQLException | IOException e) {
                     throw new RuntimeException(e);
                 }
-            }
 
+
+            }
         }
         return null;
     }

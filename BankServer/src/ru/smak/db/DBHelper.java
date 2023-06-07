@@ -240,5 +240,20 @@ public class DBHelper {
             e.printStackTrace();
         }
         return resSet;
+
+    }
+    public ResultSet getCardAll (Card card) throws SQLException
+    {
+        ResultSet resSet = null;
+        String SQL = "SELECT NumberCard FROM cardaccount";
+        try {
+            PreparedStatement pst = connection.prepareStatement(SQL);
+            resSet = pst.executeQuery();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return resSet;
     }
 }
